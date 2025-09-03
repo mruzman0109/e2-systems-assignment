@@ -1,6 +1,8 @@
 package hr.e2systems.api;
 
 import hr.e2systems.dto.request.IcaoRequest;
+import hr.e2systems.dto.request.SubscriptionUpdateRequest;
+import hr.e2systems.dto.response.SubscriptionResponse;
 import hr.e2systems.entity.Subscription;
 import hr.e2systems.services.SubscriptionService;
 import jakarta.validation.Valid;
@@ -31,5 +33,10 @@ public class SubscriptionController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable String icao) {
         service.unsubscribe(icao);
+    }
+    @PutMapping("/{icao}")
+    public SubscriptionResponse updateSubscription(@PathVariable String icao,
+                                                   @RequestBody SubscriptionUpdateRequest request) {
+        return service.updateActiveStatus(icao.toUpperCase(), request);
     }
 }

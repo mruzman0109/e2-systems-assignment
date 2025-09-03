@@ -1,5 +1,7 @@
 package hr.e2systems.services;
 
+import hr.e2systems.dto.request.SubscriptionUpdateRequest;
+import hr.e2systems.dto.response.SubscriptionResponse;
 import hr.e2systems.entity.Subscription;
 import hr.e2systems.repository.SubscriptionRepository;
 import jakarta.transaction.Transactional;
@@ -37,5 +39,17 @@ public class SubscriptionService {
 
     public List<Subscription> list() {
         return subscriptionRepository.findAll();
+    }
+
+    public SubscriptionResponse updateActiveStatus(String upperCase, SubscriptionUpdateRequest active) {
+        boolean activeBool = Boolean.parseBoolean(String.valueOf(active.getActive().equals("1")));
+        Subscription subscription = subscriptionRepository.findById(upperCase)
+                .orElseThrow(() -> new IllegalArgumentException("Subscription with ICAO code " + upperCase + " not found."));
+        subscription.setActive(activeBool);
+        subscriptionRepository.save(subscription);
+        return SubscriptionResponse.builder()
+                .icaoCode(subscription.getIcaoCode())
+                .active(subscription.isActive())
+                .build();
     }
 }

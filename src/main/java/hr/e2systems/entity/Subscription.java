@@ -29,4 +29,7 @@ public class Subscription {
             createdAt = Instant.now();
         }
     }
+
+    @Column(nullable = false)
+    private boolean active = true;
 }
