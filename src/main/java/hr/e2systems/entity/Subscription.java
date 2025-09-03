@@ -11,13 +11,22 @@ import java.time.Instant;
 @Entity
 @Table(name = "subscriptions")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Subscription {
     @Id
     @Column(length = 4, nullable = false, unique = true)
     private String icaoCode; // uppercase 4 letters
 
 
-    @CreationTimestamp
     @Column(nullable = false, updatable = false)
-    private Instant createdAt;
+    private Instant createdAt = Instant.now();
+
+    @PrePersist
+    public void prePersist() {
+        if (createdAt == null) {
+            createdAt = Instant.now();
+        }
+    }
 }
