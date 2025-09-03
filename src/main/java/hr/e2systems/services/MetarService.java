@@ -65,7 +65,7 @@ public class MetarService {
 
     private String parseWind(String raw) {
         // Primjer: 09002MPS vjetar
-        Pattern pattern = Pattern.compile("\\b(\\d{3}\\d{2}MPS)\\b");
+        Pattern pattern = Pattern.compile("\\b(\\d{2}\\d{2}MPS)\\b");
         Matcher matcher = pattern.matcher(raw);
         return matcher.find() ? matcher.group(1) : null;
     }

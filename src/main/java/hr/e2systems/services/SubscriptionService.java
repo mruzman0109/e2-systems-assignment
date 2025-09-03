@@ -27,6 +27,7 @@ public class SubscriptionService {
         subscription = Subscription.builder()
                 .icaoCode(icao)
                 .createdAt(Instant.now())
+                .active(true)
                 .build();
         subscriptionRepository.save(subscription);
         return subscription;
