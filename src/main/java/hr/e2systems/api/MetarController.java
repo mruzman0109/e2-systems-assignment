@@ -6,6 +6,8 @@ import hr.e2systems.dto.response.MetarResponse;
 import hr.e2systems.entity.Metar;
 import hr.e2systems.exceptions.MetarNotFoundException;
 import hr.e2systems.services.MetarService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,12 +17,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/airport/{icao}/METAR")
+@Tag(name = "METAR", description = "Manage METAR data for airports")
 public class MetarController {
     @Autowired
     private MetarService metarService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Ingest METAR data for an airport")
     public MetarResponse ingest(@PathVariable String icao,
                                 @Valid @RequestBody MetarRequest req) {
         var m = metarService.saveMetar(icao, req.getData());
@@ -49,6 +53,7 @@ public class MetarController {
     }
    **/
     @GetMapping
+    @Operation(summary = "Get latest METAR data for an airport with optional fields")
     public MetarResponse getMetar(@PathVariable String icao,
                                         @RequestParam(required = false) List<String> fields) {
         Metar metar = metarService.getLatest(icao).orElse(null);
@@ -76,6 +81,7 @@ public class MetarController {
     }
 
     @GetMapping("/decoded")
+    @Operation(summary = "Get decoded latest METAR data for an airport")
     public String getDecodedMetar(@PathVariable String icao) {
         Metar metar = metarService.getLatest(icao).orElse(null);
         if(metar == null) throw new MetarNotFoundException(icao);
