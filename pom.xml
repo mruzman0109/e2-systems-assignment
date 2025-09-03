@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>hr.e2systems</groupId>
-	<artifactId>spring-boot</artifactId>
+	<artifactId>metar-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-boot</name>
+	<name>metar-service</name>
 	<description>Assignment for E2 Systems</description>
 	<url/>
 	<licenses>
