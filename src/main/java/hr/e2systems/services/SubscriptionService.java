@@ -52,4 +52,16 @@ public class SubscriptionService {
                 .active(subscription.isActive())
                 .build();
     }
+
+    public List<Subscription> getOnlyActiveSubscriptions() {
+        return subscriptionRepository.findByActiveTrue();
+    }
+
+    public List<Subscription> getSubscriptionsByPrefix(String prefix) {
+        return subscriptionRepository.findByIcaoCodeStartingWithIgnoreCase(prefix.toUpperCase());
+    }
+
+    public List<Subscription> getActiveSubscriptionsByPrefix(String prefix) {
+        return subscriptionRepository.findByActiveTrueAndIcaoCodeStartingWithIgnoreCase(prefix);
+    }
 }

@@ -29,6 +29,23 @@ public class SubscriptionController {
         return service.list();
     }
 
+    @GetMapping("/active")
+    public List<Subscription> getOnlyActiveSubscriptions() {
+        return service.getOnlyActiveSubscriptions();
+    }
+
+    @GetMapping("/{prefix}")
+    public List<Subscription> getByPrefix(@PathVariable String prefix) {
+        return service.getSubscriptionsByPrefix(prefix);
+    }
+
+    @GetMapping("/active/{prefix}")
+    public List<Subscription> getActiveByPrefix(@PathVariable String prefix) {
+        return service.getActiveSubscriptionsByPrefix(prefix);
+    }
+
+
+
     @DeleteMapping("/{icao}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable String icao) {
