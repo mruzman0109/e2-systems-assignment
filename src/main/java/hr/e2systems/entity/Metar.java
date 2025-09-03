@@ -12,6 +12,8 @@ import java.time.Instant;
 @Table(name = "metar")
 @Data
 @Builder
+@NoArgsConstructor // dodano zbog ove greške: No default constructor for entity:  : hr.e2systems.entity.Metar
+@AllArgsConstructor // moram imati zbog buildera!
 public class Metar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
