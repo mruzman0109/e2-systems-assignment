@@ -12,4 +12,7 @@ public class MetarResponse {
     String rawText;
     Instant observedAt;
     Instant receivedAt;
+    String wind;
+    String temperature;
+    String visibility;
 }

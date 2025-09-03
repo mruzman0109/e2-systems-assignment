@@ -34,4 +34,8 @@ public class Metar {
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private Instant receivedAt;
+
+    private String wind;
+    private String temperature;
+    private String visibility;
 }

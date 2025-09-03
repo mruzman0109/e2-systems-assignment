@@ -31,6 +31,9 @@ public class MetarService {
                 .rawText(data)
                 .observedAt(observedAt) // get out of rawText will get that soon
                 .receivedAt(now)
+                .wind(parseWind(data))
+                .temperature(parseTemperature(data))
+                .visibility(parseVisibility(data))
                 .build();
 
         return metarRepository.save(m);
@@ -58,5 +61,26 @@ public class MetarService {
             }
         }
         return Optional.empty();
+    }
+
+    private String parseWind(String raw) {
+        // Primjer: 09002MPS vjetar
+        Pattern pattern = Pattern.compile("\\b(\\d{3}\\d{2}MPS)\\b");
+        Matcher matcher = pattern.matcher(raw);
+        return matcher.find() ? matcher.group(1) : null;
+    }
+
+    private String parseTemperature(String raw) {
+        // Primjer: 0/M01 temperatura
+        Pattern pattern = Pattern.compile("\\b(\\d/M?-?\\d{2})\\b");
+        Matcher matcher = pattern.matcher(raw);
+        return matcher.find() ? matcher.group(1) : null;
+    }
+
+    private String parseVisibility(String raw) {
+        // Primjer: 2000 vidljivost
+        Pattern pattern = Pattern.compile("\\b(\\d{4})\\b");
+        Matcher matcher = pattern.matcher(raw);
+        return matcher.find() ? matcher.group(1) : null;
     }
 }
