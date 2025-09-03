@@ -27,7 +27,7 @@ public class MetarService {
         Metar m = Metar.builder()
                 .icaoCode(icao.toUpperCase())
                 .rawText(data)
-                .observedAt(now) // get out of rawText will get that soon
+                .observedAt(observedAt) // get out of rawText will get that soon
                 .receivedAt(now)
                 .build();
 
